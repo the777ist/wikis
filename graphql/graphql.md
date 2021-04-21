@@ -35,7 +35,7 @@
         author: Person! 
     }
 
-*! means a compulsory field*
+*! means a compulsory field*  
 *[] means multiple*
 
 -Example queries:
