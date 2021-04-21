@@ -1,6 +1,6 @@
 # GRAPHQL
 
-## OVERVIEW:
+## OVERVIEW
 
 GraphQL enables declarative data fetching where a client can specify exactly what data it needs from an API.
 
@@ -20,7 +20,7 @@ GraphQL offers strong type capabilities, owing to it's schema system.
 
 The schema allows independednt FE and BE development since both are aware of the structure of data to be returned.
 
-## CONCEPTS:
+## CONCEPTS
 
 Queries:
 
