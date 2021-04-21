@@ -68,6 +68,19 @@
 
 -Schema definition for CRUD:
 
+    type Person {
+        id: ID!
+        name: String!
+        age: Int
+        posts: [Post!]!
+    }
+
+    type Post {
+        id: ID!
+        title: String!
+        author: Person! 
+    }
+
     type Query {
         allPersons(<OPTIONAL_ARGS>): [Person!]!
         allPosts(<OPTIONAL_ARGS>): [Post!]!
@@ -85,20 +98,13 @@
 
     type Subscription {
         newPerson: Person!
+        updatedPerson: Person!
+        deletedPerson: Person!
+        newPost: Post!
+        updatedPost: Post!
+        deletedPost: Post!
     }
-
-    type Person {
-        id: ID!
-        name: String!
-        age: Int
-        posts: [Post!]!
-    }
-
-    type Post {
-        id: ID!
-        title: String!
-        author: Person! 
-    }
+    
 
 
 
