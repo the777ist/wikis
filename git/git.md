@@ -1,4 +1,5 @@
-GIT:
+# GIT
+
 	
     $ git diff 
     $ git diff <file>

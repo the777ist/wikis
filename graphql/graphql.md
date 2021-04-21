@@ -1,4 +1,4 @@
-# GRAPHQL:
+# GRAPHQL
 
 ## OVERVIEW:
 
