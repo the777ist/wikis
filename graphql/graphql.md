@@ -22,23 +22,7 @@
 
 ## CONCEPTS:
 
--Schema definition language (SDL) for defining schemas, eg:
-
-    type Person {
-        name: String!
-        age: Int
-        posts: [Post!]!
-    }
-
-    type Post {
-        title: String!
-        author: Person! 
-    }
-
-*! means a compulsory field*  
-*[] means multiple*
-
--Example queries:
+-Queries:
 
     {
         allPersons {
@@ -62,8 +46,59 @@
         }
     }
 
+-Mutations: Making changes to data.
 
+    mutation {
+        createPerson(name: "Bob", age: "20") {
+            name
+            age
+        }
+    }
 
+-Subscriptions: Real time updates with subscriptions: when a client subscribes to an event, it will initiate and hold a steady connection to the server.
+
+    subscription {
+        newPerson {
+            name
+            age
+        }
+    }
+
+-In this above example, the client subscribes on the server to get informed about new users being created. Whenever that particular event then actually happens, the server pushes the corresponding data to the client. In this example this is the name and the age of the new user since that's the information that's specified in the subscription payload.
+
+-Schema definition for CRUD:
+
+    type Query {
+        allPersons(<OPTIONAL_ARGS>): [Person!]!
+        allPosts(<OPTIONAL_ARGS>): [Post!]!
+    }
+
+    type Mutation {
+        createPerson(name: String!, age: String!): Person!
+        updatePerson(id: ID!, name: String!, age: String!): Person!
+        deletePerson(id: ID!): Person!
+
+        createPost(title: String!): Post!  
+        updatePost(id: ID!, title: String!): Post!
+        deletePost(id: ID!): Post!  
+    }
+
+    type Subscription {
+        newPerson: Person!
+    }
+
+    type Person {
+        id: ID!
+        name: String!
+        age: Int
+        posts: [Post!]!
+    }
+
+    type Post {
+        id: ID!
+        title: String!
+        author: Person! 
+    }
 
 
 
