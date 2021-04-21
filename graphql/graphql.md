@@ -22,6 +22,47 @@
 
 ## CONCEPTS:
 
+-Schema definition language (SDL) for defining schemas, eg:
+
+    type Person {
+        name: String!
+        age: Int
+        posts: [Post!]!
+    }
+
+    type Post {
+        title: String!
+        author: Person! 
+    }
+
+*! means a compulsory field*
+*[] means multiple*
+
+-Example queries:
+
+    {
+        allPersons {
+            name
+        }
+    }
+
+    {
+        allPersons(<OPTIONAL_ARGS>) {
+            name
+            age
+        }
+    }
+
+    {
+        allPersons {
+            name
+                posts {
+                    title
+                }
+        }
+    }
+
+
 
 
 
