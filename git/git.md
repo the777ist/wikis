@@ -55,11 +55,12 @@
     $ git branch -d <branch_name>
     // delete a branch
 
--rebase: similar to merge but diferent  
+Rebase: similar to merge but diferent  
 -rebase does not make an explicit merge commit  
 -rather, it combines the history of 2 branches  
 -all commits on feature branches are put at the tip of the master branch, upon rebase  
 -results in a much cleaner and linear project   
+
 
     $ git checkout <target_branch eg: feature branch>
     $ git rebase <source_branch eg: master>
@@ -86,7 +87,7 @@
     $ git stash drop
     // drop all stashed changes after applying them
 
--by default git will not stash changes made to new files that have not yet been staged, and files that have been ignored
+By default git will not stash changes made to new files that have not yet been staged, and files that have been ignored
 
     $ git stash -u
     // stash untracked files
