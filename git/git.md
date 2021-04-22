@@ -140,3 +140,11 @@ By default git will not stash changes made to new files that have not yet been s
     $ git tag -a <tag_name> -f <comiit_id>
     // update a particular tag to a different branch
 
+Merge without commit:
+
+    $ git checkout <target>
+    $ git merge <source> --no-ff --no-commit
+    $ git restore <files>
+    $ git add .
+    $ cit commit -m '<message>'
+    $ git push origin <target>
