@@ -14,9 +14,9 @@ Async operations on array avoiding looping over elements:
 
     await asyncOperations([<ARRAY>]);
 
-Safe JSON Stringify:
+Safe JSON Stringify: 
 
-    function safeJSONStringify(obj) {
+    function safeJSONStringify(obj) { 
         const replaceErrors = (key, value) => {
             if (value instanceof Error) {
                 const error = {};
