@@ -25,7 +25,7 @@ Now, to get mongoDB running:
 
     sudo nano /etc/init.d/mongod
 
-Paste the contents in this [link]() into the file and save it.
+Paste the contents in this [link](https://github.com/hrittik777/wikis/blob/main/mongodb/init.d-mongod.txt) into the file and save it.
 
 Give permissions
 

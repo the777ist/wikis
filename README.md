@@ -6,5 +6,6 @@ Notes and learning resources on various technologies, mostly compiled as a perso
 - [GRAPHQL](graphql/graphql.md)
 - [KAFKA](kafka/kafka-setup.md)
 - [MISC](misc/misc.md)
+- [MONGODB](mongodb/commands.md)
 - [NODEJS](nodejs/nodejs.md)
 - [RUST](rust-setup/rust-setup.md)
