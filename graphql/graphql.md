@@ -436,3 +436,7 @@ In this example, we query a single type using the __type meta-field and we ask f
 - Throttling: stop clients from requesting resources too often.
     - based on server-time-per-second value that a client has access to
     - based on query complexity value that a client has access to
+
+## Further reading
+
+- https://www.prisma.io/blog/graphql-server-basics-the-schema-ac5e2950214e
