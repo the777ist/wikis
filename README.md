@@ -9,3 +9,4 @@ Notes and learning resources on various technologies, mostly compiled as a perso
 - [MONGODB](mongodb/commands.md)
 - [NODEJS](nodejs/nodejs.md)
 - [RUST](rust-setup/rust-setup.md)
+- [TYPESCRIPT](typescript/typescript.md)
