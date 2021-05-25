@@ -4,7 +4,7 @@
 
     async function operation(element) {
         // some operations
-    }
+    } 
 
     async function asyncOperations(allElements) {
         const asyncRowsCalc = [];
