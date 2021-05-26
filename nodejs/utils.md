@@ -65,24 +65,55 @@ I want to return an array having only those objects that are common to both arra
         console.log(result);
     })();
 
-#### Return hash value for supplied string:
+#### Find top-level parent of each array element in a hierarchy:
 
-    stringHash(str) {
-        let hash = 5381;
-        let i = str.length;
-        while (i) {
-            hash = (hash * 33) ^ str.charCodeAt(--i);
+    let arr1 = [
+        {
+            id: 1,
+            parentId: null,
+            name: 'foo'
+        },
+        {
+            id: 2,
+            parentId: 1,
+            name: 'bar'
+        },
+        {
+            id: 3,
+            parentId: 2,
+            name: 'baz'
+        },
+        {
+            id: 4,
+            parentId: 3,
+            name: 'fizz'
+        },
+    ];
+
+    let result = [];
+
+    async function asyncFindOrgUnit(unit, origUnit) {
+        const parentUnit = result.find(item => unit.parentId === item.id);
+
+        if (parentUnit) asyncFindOrgUnit(parentUnit, origUnit);
+        else {
+            const unitIndex = result.indexOf(result.find(item => item.id === origUnit.id));
+            result[unitIndex]['topParent'] = unit.id;
         }
-        // unsigned bitshift
-        return hash >>> 0;
     }
 
-#### Is string a valid UUID:
+    async function findTopLevelOrgUnit(units) {
+        const asyncCalls = [];
 
-    static isUUID4(str) {
-        const uuidPattern = '^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$';
-        return (new RegExp(uuidPattern)).test(str);
+        result = [...units];
+        result.forEach(item => asyncCalls.push(asyncFindOrgUnit(item, item)));
+        await Promise.all(asyncCalls);
     }
+
+    (async function test() {
+        await findTopLevelOrgUnit(arr1);
+        console.log(result)
+    })();
 
 #### List to tree:
 
@@ -107,31 +138,6 @@ I want to return an array having only those objects that are common to both arra
         }
         return roots;
     }
-
-#### Find top-level parent of each child node of a tree asynchronously:
-
-    let allUnits = [];
-
-    async function asyncFindOrgUnit(unit, origUnit) {
-        const parentUnit = allUnits.find(item => unit.parentId === item.id);
-
-        if (parentUnit) asyncFindOrgUnit(parentUnit, origUnit);
-        else {
-            const unitIndex = allUnits.indexOf(allUnits.find(item => item.id === origUnit.id));
-            allUnits[unitIndex]['parentOrg'] = unit.id;
-            return;
-        }
-    }
-
-    async function findTopLevelOrgUnit(units) {
-        allUnits = [...units];
-        const asyncCalls = [];
-        allUnits.forEach(item => asyncCalls.push(asyncFindOrgUnit(item, item)));
-        await Promise.all(asyncCalls);
-        console.log(allUnits);
-    }
-
-    await findTopLevelOrgUnit(<array of 8000 objects>)
 
 #### Check if a variable is an array or object:
 
