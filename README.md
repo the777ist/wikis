@@ -2,7 +2,7 @@
 Notes and learning resources on various technologies, mostly compiled as a personal reference.
 
 
-- [GIT](git/git.md)
+- [GIT](https://github.com/hrittik777/wikis/tree/main/git)
 - [GRAPHQL](graphql/graphql.md)
 - [KAFKA](kafka/kafka-setup.md)
 - [MISC](misc/misc.md)
