@@ -14,6 +14,44 @@
 
     await asyncOperations([<ARRAY>]);
     
+#### Chunked async operations:
+Chunk a large array into smaller sub-arrays.  
+Asynchronously perform operations on sub-array elements.  
+After completion, move over to next sub-array
+
+    async function operation(element) {
+        // some operations
+    }
+    
+    (function test(allItems) {
+        const batchChunk = 20;
+        const oprQueueBatch = [];
+        const oprQueue = [];
+
+        // chunk allItems into smaller sub-arrays
+        for (let index = 0; index < allItems.length; index += batchChunk) {
+            oprQueueBatch.push(allItems.slice(index, index + batchChunk));
+        }
+
+        // await operations on each subarray and loop over
+        for (let index = 0; index < oprQueueBatch.length - 1; index += 1) {
+            await oprBatch(oprQueueBatch[index]);
+        }
+
+        // create an array of promises for each item in sub-array, resolve when all async operations are complete
+        const oprBatch = async times => {
+            times.forEach(item => oprQueue.push(opr(item)));
+            await Promise.all(oprQueue);
+        }
+
+        // perform async operation for each item of sub-array
+        const opr = async item => await operation(item);
+    })([<ARRAY>]);
+    
+    
+
+    
+
 #### Hash Table alternative to nested loop:  
 I have 2 arrays (arr1 and arr2), each containing 5000+ objects.  
 I want to return an array having only those objects that are common to both arrays
