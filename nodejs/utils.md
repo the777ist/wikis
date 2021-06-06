@@ -1,10 +1,10 @@
 # UTILS
 
-Async operations on array avoiding looping over elements:
+#### Async operations on array avoiding looping over elements:
 
     async function operation(element) {
         // some operations
-    }
+    } 
 
     async function asyncOperations(allElements) {
         const asyncRowsCalc = [];
@@ -13,64 +13,147 @@ Async operations on array avoiding looping over elements:
     }
 
     await asyncOperations([<ARRAY>]);
+    
+#### Chunked async operations:
+Chunk a large array into smaller sub-arrays.  
+Asynchronously perform operations on sub-array elements.  
+After completion, move over to next sub-array
 
-Safe JSON Stringify: 
+    async function operation(element) {
+        // some operations
+    }
+    
+    (function test(allItems) {
+        const batchChunk = 20;
+        const oprQueueBatch = [];
+        const oprQueue = [];
 
-    function safeJSONStringify(obj) { 
-        const replaceErrors = (key, value) => {
-            if (value instanceof Error) {
-                const error = {};
-                Object.getOwnPropertyNames(value).forEach((key) => {
-                    error[key] = value[key];
-                });
-                return error;
+        // chunk allItems into smaller sub-arrays
+        for (let index = 0; index < allItems.length; index += batchChunk) {
+            oprQueueBatch.push(allItems.slice(index, index + batchChunk));
+        }
+
+        // await operations on each subarray and loop over
+        for (let index = 0; index < oprQueueBatch.length - 1; index += 1) {
+            await oprBatch(oprQueueBatch[index]);
+        }
+
+        // create an array of promises for each item in sub-array, resolve when all async operations are complete
+        const oprBatch = async times => {
+            times.forEach(item => oprQueue.push(opr(item)));
+            await Promise.all(oprQueue);
+        }
+
+        // perform async operation for each item of sub-array
+        const opr = async item => await operation(item);
+    })([<ARRAY>]);
+    
+    
+
+    
+
+#### Hash Table alternative to nested loop:  
+I have 2 arrays (arr1 and arr2), each containing 5000+ objects.  
+I want to return an array having only those objects that are common to both arrays
+
+    let arr1 = [
+        { a: 'foo', b: 'bar' },
+        { a: 'foo', b: 'baz' }
+        // 5000+ more elements
+    ];
+
+    let arr2 = [
+        { a: 'baz', b: 'foo' },
+        { a: 'foo', b: 'baz' }
+        // 5000+ more elements
+    ];
+
+    let hashTable = {}
+    let result = [];
+
+
+    // BAD - nested loop - O(n^2)
+    (function test() {
+        arr1.forEach(key1 => arr2.forEach(key2 => {
+            if (key1.a === key2.a && key1.b === key2.b) {
+                result.push(key2)
             }
-            return value;
-        };
-        return JSON.stringify(obj, replaceErrors);
-    }
+        }));
 
-Safe JSON Parse:
+        console.log(result);
+    })();
+    
+    
+    // GOOD - hash table - O(n)
+    (function test() {
+        arr1.forEach(key1 => {
+            if (hashTable.hasOwnProperty(`${key1.a}-${key1.b}`)) {
+                hashTable[`${key1.a}-${key1.b}`] += 1; 
+            } else {
+                hashTable[`${key1.a}-${key1.b}`] = 1; 
+            }
+        });
 
-    function safeJSONParse(str) {
-        let data;
-        try {
-            data = JSON.parse(str);
-        } catch (e) {
-            data = undefined;
+        arr2.forEach(key2 => {
+            if (hashTable.hasOwnProperty(`${key2.a}-${key2.b}`)) {
+                result.push(key2);
+            }
+        });
+
+        console.log(result);
+    })();
+
+#### Find top-level parent of each array element in a hierarchy:
+
+    let arr1 = [
+        {
+            id: 1,
+            parentId: null,
+            name: 'foo'
+        },
+        {
+            id: 2,
+            parentId: 1,
+            name: 'bar'
+        },
+        {
+            id: 3,
+            parentId: 2,
+            name: 'baz'
+        },
+        {
+            id: 4,
+            parentId: 3,
+            name: 'fizz'
+        },
+    ];
+
+    let result = [];
+
+    async function asyncFindOrgUnit(unit, origUnit) {
+        const parentUnit = result.find(item => unit.parentId === item.id);
+
+        if (parentUnit) asyncFindOrgUnit(parentUnit, origUnit);
+        else {
+            const unitIndex = result.indexOf(result.find(item => item.id === origUnit.id));
+            result[unitIndex]['topParent'] = unit.id;
         }
-        return data;
     }
 
-Return hash value for supplied string:
+    async function findTopLevelOrgUnit(units) {
+        const asyncCalls = [];
 
-    stringHash(str) {
-        let hash = 5381;
-        let i = str.length;
-        while (i) {
-            hash = (hash * 33) ^ str.charCodeAt(--i);
-        }
-        // unsigned bitshift
-        return hash >>> 0;
+        result = [...units];
+        result.forEach(item => asyncCalls.push(asyncFindOrgUnit(item, item)));
+        await Promise.all(asyncCalls);
     }
 
-Is string a valid UUID:
+    (async function test() {
+        await findTopLevelOrgUnit(arr1);
+        console.log(result)
+    })();
 
-    static isUUID4(str) {
-        const uuidPattern = '^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$';
-        return (new RegExp(uuidPattern)).test(str);
-    }
-
-Shuffle array in place:
-
-    static shuffleArray(a) {
-        for (let i = a.length; i; i--) {
-            const j = Math.floor(Math.random() * i);
-            [a[i - 1], a[j],] = [a[j], a[i - 1],];
-        }
-    }
-
-List to tree:
+#### List to tree:
 
     function listToTree(list) {
         const map = {};
@@ -94,32 +177,7 @@ List to tree:
         return roots;
     }
 
-Find top-level parent of each child node of a tree asynchronously:
-
-    let allUnits = [];
-
-    async function asyncFindOrgUnit(unit, origUnit) {
-        const parentUnit = allUnits.find(item => unit.parentId === item.id);
-
-        if (parentUnit) asyncFindOrgUnit(parentUnit, origUnit);
-        else {
-            const unitIndex = allUnits.indexOf(allUnits.find(item => item.id === origUnit.id));
-            allUnits[unitIndex]['parentOrg'] = unit.id;
-            return;
-        }
-    }
-
-    async function findTopLevelOrgUnit(units) {
-        allUnits = [...units];
-        const asyncCalls = [];
-        allUnits.forEach(item => asyncCalls.push(asyncFindOrgUnit(item, item)));
-        await Promise.all(asyncCalls);
-        console.log(allUnits);
-    }
-
-    await findTopLevelOrgUnit(<array of 8000 objects>)
-
-Check if a variable is an array or object:
+#### Check if a variable is an array or object:
 
     function isArray(a) {
         return (!!a) && (a.constructor === Array);
@@ -129,112 +187,7 @@ Check if a variable is an array or object:
         return (!!a) && (a.constructor === Object);
     };
 
-Calculating dates based on diffs using moment:
-
-    function findDailyParameters(date, diff) {
-        const current = moment(date)
-            .startOf('day')
-            .add(-diff, 'minute')
-            .format(timeFormat);
-        const last = moment(date)
-            .add(-1, 'day');
-
-        return {
-            'currentStart': current,
-            'currentEnd': moment(date).add(1, 'day')
-                .startOf('day')
-                .add(-diff, 'minute')
-                .format(timeFormat),
-            'lastStart': moment(last)
-                .startOf('day')
-                .add(-diff, 'minute')
-                .format(timeFormat),
-            'lastEnd': moment(last).add(1, 'day')
-                .startOf('day')
-                .add(-diff, 'minute')
-                .format(timeFormat),
-            'timeType': ['hour', 'day', 'date', 'hour',],
-            'currentDisplay': moment(date)
-                .format(dayDisplayFormat),
-            'lastDisplay': last.format(dayDisplayFormat),
-            'diffIndex': 0,
-            'dateFormat': 'YYYY-MM-DD HH:00:00',
-            'max': 24,
-        };
-    };
-
-    function findMonthlyParameters(date, diff) {
-        const startOfMonth = moment(date)
-            .startOf('month');
-            
-        return {
-            'currentStart': startOfMonth.add(-diff, 'minute')
-                .format(timeFormat),
-            'currentEnd': moment(date).add(1, 'month')
-                .startOf('month')
-                .add(-diff, 'minute')
-                .format(timeFormat),
-            'lastStart': moment(date)
-                .add(-1, 'month')
-                .startOf('month')
-                .add(-diff, 'minute')
-                .format(timeFormat),
-            'lastEnd': startOfMonth.add(-diff, 'minute')
-                .format(timeFormat),
-            'timeType': ['day', 'month', 'month', 'date',],
-            'currentDisplay': moment(date)
-                .format('MMMM YYYY'),
-            'lastDisplay': moment(date)
-                .add(-1, 'month')
-                .format('MMMM YYYY'),
-            'diffIndex': 1,
-            'dateFormat': 'YYYY-MM-DD 00:00:00',
-            'max': 31,
-        };
-    };
-
-    function findYearlyParameters(date, diff) {
-        const startOfYear = moment(date)
-            .startOf('year');
-
-        return {
-            'currentStart': startOfYear.add(-diff, 'minute')
-                .format(timeFormat),
-            'currentEnd': moment(date).add(1, 'year')
-                .startOf('year')
-                .add(-diff, 'minute')
-                .format(timeFormat),
-            'lastStart': moment(date)
-                .add(-1, 'year')
-                .startOf('year')
-                .add(-diff, 'minute')
-                .format(timeFormat),
-            'lastEnd': startOfYear.add(-diff, 'minute')
-                .format(timeFormat),
-            'timeType': ['month', 'year', 'year', 'month',],
-            'currentDisplay': moment(date)
-                .format('YYYY'),
-            'lastDisplay': moment(date)
-                .add(-1, 'year')
-                .format('YYYY'),
-            'diffIndex': 1,
-            'dateFormat': 'YYYY-MM-01 00:00:00',
-            'max': 12,
-        };
-    };
-
-    function getDaysBetween(startDate, endDate) {
-        let now = startDate.clone(), dates = [];
-
-        while (now.isSameOrBefore(endDate)) {
-            dates.push(now.format('YYYY-MM-DD 00:00:00'));
-            now.add(1, 'days');
-        }
-
-        return dates;
-    }
-
-Check for leap year:
+#### Check for leap year:
 
     function leapYear(year) {
         return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
