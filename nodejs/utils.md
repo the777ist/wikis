@@ -86,17 +86,13 @@ I want to return an array having only those objects that are common to both arra
     
     // GOOD - hash table - O(n)
     (function test() {
-        arr1.forEach(key1 => {
-            if (hashTable.hasOwnProperty(`${key1.a}-${key1.b}`)) {
-                hashTable[`${key1.a}-${key1.b}`] += 1; 
-            } else {
-                hashTable[`${key1.a}-${key1.b}`] = 1; 
-            }
+        arr1.forEach(item => {
+            hashTable[`${item.a}-${item.b}`] = (hashTable[`${item.a}-${item.b}`] || 0) + 1;
         });
 
-        arr2.forEach(key2 => {
-            if (hashTable.hasOwnProperty(`${key2.a}-${key2.b}`)) {
-                result.push(key2);
+        arr2.forEach(item => {
+            if (hashTable.hasOwnProperty(`${item.a}-${item.b}`)) {
+                result.push(item);
             }
         });
 
