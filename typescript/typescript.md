@@ -291,5 +291,37 @@ configure("auto");
 configure("automatic"); // ERR
 ```
 
+#### Literal Interface:
 
+In the below example req.method is inferred to be string, not "GET":
 
+    const req = { url: "https://example.com", method: "GET" };
+    handleRequest(req.url, req.method);
+
+The as const suffix acts like const but for the type system, ensuring that all properties are assigned the literal type instead of a more general version like *string* or *number*.
+
+    const req = { url: "https://example.com", method: "GET" } as const;
+    handleRequest(req.url, req.method);
+
+#### `strictNullChecks` on:
+
+With strictNullChecks on, when a value is null or undefined, you will need to test for those values before using methods or properties on that value.
+
+    function doSomething(x: string | null) {
+        if (x === null) {
+            // do nothing
+        } else {
+            console.log("Hello, " + x.toUpperCase());
+        }
+    }
+
+#### Non-null Assertion Operator (Postfix `!`):
+
+Writing ! after any expression is effectively a type assertion that the value isn’t `null` or `undefined`:
+
+    function liveDangerously(x?: number | null) {
+        // No error
+        console.log(x!.toFixed());
+    }
+
+Only use ! when you know that the value can’t be `null` or `undefined`.
