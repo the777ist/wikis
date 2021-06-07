@@ -1,25 +1,26 @@
 # JAVASCRIPT CLASS SYNTAX
 
 #### Constructor, Properties, Instance Methods and Class Methods:
-
-    class Student {
-        constructor(firstName, lastName) {
-            this.firstName = firstName;
-            this.lastName = lastName;
-        }
-
-        getName() {
-            return `${this.firstName} ${this.lastName}`;
-        }
-
-        static GetAllNames(students) {
-            return students.map(student => `${student.firstName} ${student.lastName}`)
-        }
+```js
+class Student {
+    constructor(firstName, lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
-    let student1 = new Student('John', 'Doe');
-    let student2 = new Student('Jane', 'Doe');
+    getName() {
+        return `${this.firstName} ${this.lastName}`;
+    }
 
-    student1.getName();
-    student2.getName();
-    Student.GetAllNames([student1, student2]);
+    static GetAllNames(students) {
+        return students.map(student => `${student.firstName} ${student.lastName}`)
+    }
+}
+
+let student1 = new Student('John', 'Doe');
+let student2 = new Student('Jane', 'Doe');
+
+student1.getName();
+student2.getName();
+Student.GetAllNames([student1, student2]);
+```
