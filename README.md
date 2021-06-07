@@ -10,4 +10,5 @@ Notes and learning resources on various technologies, mostly compiled as a perso
 - [MONGODB](https://github.com/hrittik777/wikis/tree/main/mongodb)
 - [NODEJS](https://github.com/hrittik777/wikis/tree/main/nodejs)
 - [RUST](https://github.com/hrittik777/wikis/tree/main/rust)
+- [SYSTEM DESIGN](https://github.com/hrittik777/wikis/tree/main/system-design)
 - [TYPESCRIPT](https://github.com/hrittik777/wikis/tree/main/typescript)
