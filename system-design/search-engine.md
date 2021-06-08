@@ -18,6 +18,4 @@ Example:
 Here,  
 Document 1 contains the word `hello` at positions (indexes) 5, 10 and 25.
 Document 5 contains the word `hello` at positions (indexes) 15 and 40.
-
-Notes:
-- Make sure the Inverted Index is sorted, so it can be binary searched. 
+ 
