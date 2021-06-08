@@ -21,7 +21,7 @@ function greet(name) {
 }
 ```
 
-#### Higher Order Functions(HOF):
+#### Higher Order Functions (HOF):
 
 A function that can take another function as an input or return another function as an output.
 ```js
@@ -35,4 +35,16 @@ var coolifier = makeAdjectifier('cool');
 coolifier('conference');
 
 // OUTPUT: “cool conference”
+```
+#### Curried function:
+```js
+let multiply = y => x => {
+    console.log(`x: ${x}`); // x: 2
+    console.log(`y: ${y}`); // y: 3
+    return x * y;
+}
+
+let triple = multiply(3); 
+
+triple(2) // 6
 ```
