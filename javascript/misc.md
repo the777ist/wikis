@@ -31,14 +31,12 @@ console.log(b); // { 'a': 1, 'b': 2, 'c': 3}
 
 #### Import and export ES5 vs. ES6:
 
-```js
+```
 // ES5:
 module.exports = <function>;
 const <variable> = require('<path>');
 
-module.exports = { 
-      <function> 
-};
+module.exports = { <function> };
 const { <function> } = require('<path>');
 
 // ES6
