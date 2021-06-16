@@ -27,6 +27,8 @@ Student.GetAllNames([student1, student2]);
 
 #### Adding an instance method later on:
 ```js
+let student3 = new Student('Michael', 'Corleone');
+
 student3.getQuote = function () {
     return `${this.firstName} ${this.lastName} says 'Just when I thought I was out, they pull me back in!'`;
 }
