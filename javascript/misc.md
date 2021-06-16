@@ -36,7 +36,9 @@ console.log(b); // { 'a': 1, 'b': 2, 'c': 3}
 module.exports = <function>;
 const <variable> = require('<path>');
 
-module.exports = { <function> };
+module.exports = { 
+      <function> 
+};
 const { <function> } = require('<path>');
 
 // ES6
