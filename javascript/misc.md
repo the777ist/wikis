@@ -44,7 +44,6 @@ export default <function>;
 import <function> from '<path>';
 
 export function <function>() { 
-      //...
 };
 import { <function> } from '<path>';
 ```
