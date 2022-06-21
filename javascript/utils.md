@@ -216,5 +216,8 @@ function combination(A, N) {
 
     return res;
 }
+
+combination([3, 9, 8, 4, 5, 7, 10], 15);
+combination([1, 2], 5);
 ```
 
