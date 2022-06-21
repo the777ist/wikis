@@ -189,3 +189,32 @@ function leapYear(year) {
     return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
 }
 ```
+
+#### Find all possible combinations of a given array of numbers, summing up to a given target:
+```js
+function combination(A, N) {
+    let res = [];
+  
+    (function subsetSum(numbers, target, partial = []) {
+        let s = partial.length ? partial.reduce((i, a) => i + a) : 0;
+
+        if (s === target) res.push(partial);
+        if (s >= target) return;
+
+        for (let i = 0; i < numbers.length; i++) {
+            let n = numbers[i];
+
+            // if we don't wanna allow repetition of numbers
+            /* let remaining = numbers.slice(i + 1); */
+
+            // if we wanna allow repetition of numbers
+            let remaining = numbers;
+
+            subsetSum(remaining, target, partial.concat([n]))
+        } 
+    })(A, N);
+
+    return res.length;
+}
+```
+
