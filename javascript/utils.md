@@ -214,7 +214,7 @@ function combination(A, N) {
         } 
     })(A, N);
 
-    return res.length;
+    return res;
 }
 ```
 
