@@ -7,7 +7,7 @@ $ sudo apt-get install default-jre
 $ sudo apt-get install zookeeperd
 
 # download kafka .tgz file in Downloads directory
-$ curl "https://downloads.apache.org/kafka/2.6.2/kafka_2.13-2.6.2.tgz" -o ~/Downloads/kafka.tgz
+$ curl "https://www.apache.org/dyn/closer.cgi?path=/kafka/3.2.0/kafka-3.2.0-src.tgz" -o ~/Downloads/kafka.tgz
 
 $ mkdir ~/kafka && cd ~/kafka
 
