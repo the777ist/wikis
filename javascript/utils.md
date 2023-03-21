@@ -221,22 +221,26 @@ combination([3, 9, 8, 4, 5, 7, 10], 15);
 combination([1, 2], 5);
 ```
 
-### Shallow equality of objects:
+### Shallow equality of objects - single level:
 ```js
-function shallowEqual(object1, object2) {
-    const keys1 = Object.keys(object1);
-    const keys2 = Object.keys(object2);
+var checkEqual = function(obj1, obj2) {
+    let keys1 = Object.keys(obj1);
+    let keys2 = Object.keys(obj2);
 
     if (keys1.length !== keys2.length) {
         return false;
     }
 
-    for (let key of keys1) {
-        if (object1[key] !== object2[key]) {
+    if (JSON.stringify(keys1.sort()) !== JSON.stringify(keys2.sort())) {
+        return false;
+    }
+    
+    for (let i = 0; i < keys1.length; i++) {
+        if (obj1[keys1[i]] !== obj2[keys1[i]]) {
             return false;
         }
     }
-    
+
     return true;
 }
 ```
