@@ -1,6 +1,6 @@
 # Miscellaneous
 
-#### Pass by value vs. Pass by reference in JavaScript:
+### Pass by value vs. Pass by reference in JavaScript:
 
 Primitives i.e. `Boolean`, `null`, `undefined`, `String`, and `Number` are passed by value.
 
@@ -29,7 +29,7 @@ console.log(a); // { 'a': 1, 'b': 2}
 console.log(b); // { 'a': 1, 'b': 2, 'c': 3}
 ```
 
-#### Import and export ES5 vs. ES6:
+### Import and export ES5 vs. ES6:
 
 ```
 // ES5:

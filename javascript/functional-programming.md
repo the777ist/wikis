@@ -1,6 +1,6 @@
 # FUNCTIONAL PROGRAMMING:
 
-#### Side effects:
+### Side effects:
 
 A function or expression is said to have a side effect if it modifies some state variable value(s) outside its local environment, that is to say has an observable effect besides returning a value (the main effect) to the invoker of the operation.  
 Pure functions don't have side effects.  
@@ -21,7 +21,7 @@ function greet(name) {
 }
 ```
 
-#### Higher Order Functions (HOF):
+### Higher Order Functions (HOF):
 
 A function that can take another function as an input or return another function as an output.
 ```js
@@ -36,7 +36,7 @@ coolifier('conference');
 
 // OUTPUT: “cool conference”
 ```
-#### Curried function:
+### Curried function:
 ```js
 let multiply = y => x => {
     console.log(`x: ${x}`); // x: 2

@@ -1,6 +1,6 @@
 # UTILS
 
-#### Async operations on array avoiding looping over elements:
+### Async operations on array avoiding looping over elements:
 ```js
 async function operation(element) {
     // some operations
@@ -15,7 +15,7 @@ async function asyncOperations(allElements) {
 await asyncOperations([<ARRAY>]);
 ```
     
-#### Chunked async operations:
+### Chunked async operations:
 Chunk a large array into smaller sub-arrays.  
 Asynchronously perform operations on sub-array elements.  
 After completion, move over to next sub-array
@@ -50,7 +50,7 @@ async function operation(element) {
 })([<ARRAY>]);
 ```
 
-#### Hash Table alternative to nested loop:  
+### Hash Table alternative to nested loop:  
 I have 2 arrays (arr1 and arr2), each containing 5000+ objects.  
 I want to return an array having only those objects that are common to both arrays
 ```js
@@ -96,7 +96,7 @@ let result = [];
 })();
 ```
 
-#### Find top-level parent of each array element in a hierarchy:
+### Find top-level parent of each array element in a hierarchy:
 ```js
 let arr1 = [
     {
@@ -147,7 +147,7 @@ async function findTopLevelOrgUnit(units) {
 })();
 ```
 
-#### List to tree:
+### List to tree:
 ```js
 function listToTree(list) {
     const map = {};
@@ -172,7 +172,7 @@ function listToTree(list) {
 }
 ```
 
-#### Check if a variable is an array or object:
+### Check if a variable is an array or object:
 ```js
 function isArray(a) {
     return (!!a) && (a.constructor === Array);
@@ -183,14 +183,14 @@ function isObject(a) {
 };
 ```
 
-#### Check for leap year:
+### Check for leap year:
 ```js
 function leapYear(year) {
     return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
 }
 ```
 
-#### Find all possible combinations of a given array of numbers, summing up to a given target:
+### Find all possible combinations of a given array of numbers, summing up to a given target:
 ```js
 function combination(A, N) {
     let res = [];
