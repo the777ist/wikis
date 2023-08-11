@@ -35,7 +35,7 @@ async function operation(element) {
     }
 
     // await operations on each subarray and loop over
-    for (let index = 0; index < oprQueueBatch.length - 1; index += 1) {
+    for (let index = 0; index < oprQueueBatch.length; index += 1) {
         await oprBatch(oprQueueBatch[index]);
     }
 
